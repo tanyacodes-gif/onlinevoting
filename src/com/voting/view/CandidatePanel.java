@@ -4,6 +4,8 @@ import com.voting.model.Candidate;
 import com.voting.model.User;
 import com.voting.service.AuthService;
 import com.voting.service.VotingService;
+import com.voting.util.SessionManager;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -22,6 +24,11 @@ public class CandidatePanel extends JFrame {
         this.authService = authService;
         this.votingService = new VotingService();
         initUI();
+        SessionManager sessionManager = new SessionManager(authService, this, () -> {
+    dispose();
+    new LoginFrame(new AuthService());
+    });
+    sessionManager.start();
     }
 
     private void initUI() {
@@ -37,7 +44,6 @@ public class CandidatePanel extends JFrame {
         mainPanel.setBackground(new Color(240, 248, 255));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Top panel
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBackground(new Color(30, 30, 60));
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -68,7 +74,6 @@ public class CandidatePanel extends JFrame {
         JScrollPane scrollPane = new JScrollPane(resultsTable);
         scrollPane.setBorder(BorderFactory.createTitledBorder("Live Vote Results"));
 
-        // Bottom panel
         JPanel bottomPanel = new JPanel(new BorderLayout());
         bottomPanel.setBackground(new Color(240, 248, 255));
         bottomPanel.setBorder(BorderFactory.createEmptyBorder(5, 0, 0, 0));
@@ -86,7 +91,6 @@ public class CandidatePanel extends JFrame {
         statusLabel = new JLabel("", SwingConstants.CENTER);
         statusLabel.setFont(new Font("Arial", Font.ITALIC, 12));
 
-        // Election status
         JLabel electionLabel = new JLabel();
         if (votingService.isElectionActive()) {
             electionLabel.setText("🟢 Election is currently ACTIVE");

@@ -4,6 +4,8 @@ import com.voting.model.Candidate;
 import com.voting.model.User;
 import com.voting.service.AuthService;
 import com.voting.service.VotingService;
+import com.voting.util.SessionManager;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -24,6 +26,11 @@ public class VoterPanel extends JFrame {
         this.authService = authService;
         this.votingService = new VotingService();
         initUI();
+        SessionManager sessionManager = new SessionManager(authService, this, () -> {
+    dispose();
+    new LoginFrame(new AuthService());
+    });
+    sessionManager.start();
     }
 
     private void initUI() {

@@ -7,8 +7,6 @@ public class AuthService {
 
     private UserDAO userDAO = new UserDAO();
     private User loggedInUser = null;
-
-    // Login - returns user if credentials are correct
     public User login(String username, String password) {
         User user = userDAO.getUserByCredentials(username, password);
         if (user != null) {

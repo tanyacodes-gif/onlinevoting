@@ -25,14 +25,12 @@ public class LoginFrame extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
 
-        // Main panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new GridBagLayout());
         mainPanel.setBackground(new Color(30, 30, 60));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        // Title
         JLabel titleLabel = new JLabel("🗳 Online Voting System");
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
         titleLabel.setForeground(Color.WHITE);
@@ -40,7 +38,6 @@ public class LoginFrame extends JFrame {
         gbc.gridwidth = 2;
         mainPanel.add(titleLabel, gbc);
 
-        // Username
         JLabel usernameLabel = new JLabel("Username:");
         usernameLabel.setForeground(Color.WHITE);
         gbc.gridx = 0; gbc.gridy = 1;
@@ -51,7 +48,6 @@ public class LoginFrame extends JFrame {
         gbc.gridx = 1; gbc.gridy = 1;
         mainPanel.add(usernameField, gbc);
 
-        // Password
         JLabel passwordLabel = new JLabel("Password:");
         passwordLabel.setForeground(Color.WHITE);
         gbc.gridx = 0; gbc.gridy = 2;
@@ -61,7 +57,6 @@ public class LoginFrame extends JFrame {
         gbc.gridx = 1; gbc.gridy = 2;
         mainPanel.add(passwordField, gbc);
 
-        // Login Button
         loginButton = new JButton("Login");
         loginButton.setBackground(new Color(70, 130, 180));
         loginButton.setForeground(Color.WHITE);
@@ -71,13 +66,11 @@ public class LoginFrame extends JFrame {
         gbc.gridwidth = 2;
         mainPanel.add(loginButton, gbc);
 
-        // Status label
         statusLabel = new JLabel("");
         statusLabel.setForeground(Color.RED);
         gbc.gridx = 0; gbc.gridy = 4;
         mainPanel.add(statusLabel, gbc);
 
-        // Login button action
         loginButton.addActionListener(e -> handleLogin());
 
         add(mainPanel);
@@ -99,9 +92,7 @@ public class LoginFrame extends JFrame {
             statusLabel.setText("Invalid username or password!");
             return;
         }
-
-        // Redirect based on role
-        dispose(); // close login window
+        dispose(); 
         if ("ADMIN".equals(user.getRole())) {
             new AdminPanel(authService);
         } else if ("VOTER".equals(user.getRole())) {

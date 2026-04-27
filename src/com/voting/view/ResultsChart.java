@@ -27,7 +27,6 @@ public class ResultsChart extends JFrame {
         mainPanel.setBackground(new Color(240, 248, 255));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        // Top panel
         JPanel topPanel = new JPanel(new BorderLayout());
         topPanel.setBackground(new Color(30, 30, 60));
         topPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -46,12 +45,10 @@ public class ResultsChart extends JFrame {
         topPanel.add(titleLabel, BorderLayout.WEST);
         topPanel.add(refreshButton, BorderLayout.EAST);
 
-        // Chart panel
         ChartPanel chartPanel = new ChartPanel(votingService);
         chartPanel.setBackground(Color.WHITE);
         chartPanel.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
 
-        // Bottom panel
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         bottomPanel.setBackground(new Color(240, 248, 255));
 
@@ -73,8 +70,6 @@ public class ResultsChart extends JFrame {
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
 
         add(mainPanel);
-
-        // Button actions
         refreshButton.addActionListener(e -> {
             chartPanel.refresh();
             totalLabel.setText("Total Votes Cast: " + votingService.getTotalVotes());
@@ -86,7 +81,6 @@ public class ResultsChart extends JFrame {
         setVisible(true);
     }
 
-    // Inner class that draws the bar chart
     class ChartPanel extends JPanel {
 
         private VotingService votingService;
@@ -145,7 +139,6 @@ public class ResultsChart extends JFrame {
             g2d.drawLine(padding, height - padding,
                         width - padding, height - padding);
 
-            // Draw Y axis labels and grid
             g2d.setFont(new Font("Arial", Font.PLAIN, 11));
             for (int i = 0; i <= 10; i++) {
                 int y = height - padding - (i * chartHeight / 10);
@@ -156,7 +149,6 @@ public class ResultsChart extends JFrame {
                 g2d.drawLine(padding, y, width - padding, y);
             }
 
-            // Draw bars
             for (int i = 0; i < barCount; i++) {
                 Candidate c = candidates.get(i);
                 int votes = votingService.getVoteCount(c.getId());
@@ -167,16 +159,13 @@ public class ResultsChart extends JFrame {
                 int x = padding + gap + i * (barWidth + gap);
                 int y = height - padding - barHeight;
 
-                // Draw bar
                 Color barColor = barColors[i % barColors.length];
                 g2d.setColor(barColor);
                 g2d.fillRoundRect(x, y, barWidth, barHeight, 10, 10);
 
-                // Draw border
                 g2d.setColor(barColor.darker());
                 g2d.drawRoundRect(x, y, barWidth, barHeight, 10, 10);
 
-                // Percentage on top
                 g2d.setColor(new Color(30, 30, 60));
                 g2d.setFont(new Font("Arial", Font.BOLD, 12));
                 String pctText = String.format("%.1f%%", percentage);
@@ -194,7 +183,6 @@ public class ResultsChart extends JFrame {
                     g2d.drawString(voteText, voteTextX, y + 20);
                 }
 
-                // Candidate name below bar
                 g2d.setColor(new Color(30, 30, 60));
                 g2d.setFont(new Font("Arial", Font.PLAIN, 11));
                 String name = c.getName().length() > 10 ?
@@ -203,7 +191,6 @@ public class ResultsChart extends JFrame {
                            g2d.getFontMetrics().stringWidth(name)) / 2;
                 g2d.drawString(name, nameX, height - padding + 20);
 
-                // Party below name
                 g2d.setColor(Color.GRAY);
                 g2d.setFont(new Font("Arial", Font.ITALIC, 10));
                 String party = c.getParty().length() > 10 ?
@@ -212,8 +199,6 @@ public class ResultsChart extends JFrame {
                             g2d.getFontMetrics().stringWidth(party)) / 2;
                 g2d.drawString(party, partyX, height - padding + 35);
             }
-
-            // Chart title
             g2d.setColor(new Color(30, 30, 60));
             g2d.setFont(new Font("Arial", Font.BOLD, 14));
             String chartTitle = "Vote Distribution by Candidate";
