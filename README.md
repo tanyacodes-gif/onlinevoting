@@ -1,4 +1,4 @@
-# 🗳️ Online Voting System
+# 🗳️ E-Ballot
 
 ![Java](https://img.shields.io/badge/Language-Java-blue)
 ![Status](https://img.shields.io/badge/Project-Completed-brightgreen)
